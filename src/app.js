@@ -20,13 +20,23 @@ const app = express();
 // ✅ Security & middleware setup
 app.use(helmet());
 
-// ✅ Allow requests only from your frontend (Vercel) or localhost during development
+// ✅ Allow requests from trusted frontends (Vercel + localhost)
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173'
+  "https://student-achievement-and-showcase-po.vercel.app",
+  "https://student-achievement-and-showcase-portal.vercel.app",
+  "http://localhost:5173"
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman) or from allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
