@@ -24,8 +24,10 @@ app.use(helmet());
 const allowedOrigins = [
   "https://student-achievement-and-showcase-po.vercel.app",
   "https://student-achievement-and-showcase-portal.vercel.app",
+  "https://student-achievement-and-sho-git-f19a46-lasyas-projects-d20d0d12.vercel.app",
   "http://localhost:5173"
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
